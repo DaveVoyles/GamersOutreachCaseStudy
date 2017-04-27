@@ -54,7 +54,7 @@ In 2009, Gamers Outreach began working with C.S. Mott Children’s Hospital of A
 
 After spending six months volunteering within the hospital, the first “GO Kart” was created – a portable, medical-grade video game kiosk that provided nurses and child life specialists with a way to transport games and entertainment to children who were unable to leave their rooms within the hospital.
 
-[Hopital Visit](/images/gamersoutreach/go-hospital-visit.jpg)
+![Hopital Visit](/images/gamersoutreach/go-hospital-visit.jpg)
  
 ## Problem statement ##
 
@@ -75,14 +75,15 @@ The team used the existing form as the basis for the information that is collect
 
 They also decided to use a DocumentDB database for storing the data so that data schema would be flexible for the volunteer developers to easily extend what data is collected in the future without having to do complex database updates.
 
+![App Service Architecture Diagram](/images/gamersoutreach/go-webapp-arch.png)
+
+*App Service Architecture Diagram*
+
 When a user submits their profile data, their address is automatically geolocated using the Bing Maps API and updated in the database. The volunteer lists can be pulled using the native GeoJSON support in DocumentDB by doing a simple spatial query on the data.
 ```
  client.CreateDocumentQuery<MyDocument>(collection.SelfLink)
     .Where(x => x.Location.Distance(cartLocation) < distance))
 ```
-![App Service Architecture Diagram](/images/gamersoutreach/go-webapp-arch.png)
-
-*App Service Architecture Diagram*
 
 Using the Bing Maps API, the volunteer data is then overlayed on a map pinpointing the location and showing nearby volunteers.
 
@@ -96,7 +97,7 @@ The team created the solution with ASP.NET MVC and DocumentDB to create a small 
 
 **Measurable impact/benefits**
 
-With this ASP.NET solution, volunteers can quickly build a profile to detail their availablity as well as how they can assist. Additonally, the Gamer's Outreach staff can easily identify volunteers that are near any of the locations where carts are deployed. When reviewing the final website, CEO Zach Wigal said:
+With this ASP.NET solution, volunteers can quickly build and update a profile to detail their availablity as well as how they can assist. Additonally, the Gamer's Outreach staff can easily identify volunteers that are near any of the locations where carts are deployed. When reviewing the final website, CEO Zach Wigal said:
 
 >"This will be incredibly helpful for us, especially when it comes time to scaling. We've been overwhelmed with having to manage this all by hand from an excel spreadsheet, so this will save us a huge amount of time."
 
