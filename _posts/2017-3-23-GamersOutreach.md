@@ -110,7 +110,7 @@ One benefit of App Services is the ability to backup not only the website's code
 
 *Scaling*
 
-To ensure a consistent experience regardless of the time of day or how many users are entering their info into our volunteer database, we needed to take advante of App Service scaling. When it comes to scaling, there are two workflows for scaling, scale up and scale out. Becuase the Gamers Outreach website is not running and computationally intensive applications, there wasn't a need to scale up, but as traffic increases on the site, especially when the volume of volunteers grows, the need to scale out will soon come into play. 
+To ensure a consistent experience regardless of the time of day or how many users are entering their info into our volunteer database, we needed to take advantage of App Service scaling. When it comes to scaling, there are two workflows for scaling, scale up and scale out. Because the Gamers Outreach website is not running and computationally intensive applications, there wasn't a need to scale up, but as traffic increases on the site, especially when the volume of volunteers grows, the need to scale out will soon come into play. 
 
 Scaling out increases the number of Virtual Machine (VM) instances that run the Gamers Outreach app. You can scale out to as many as 20 instances, depending on your pricing tier. App Service Environments in Premium tier will further increase your scale-out count to 50 instances, which is more than would be need3ed here. Morevoer, we've enabled autoscaling, which is to scale instance count automatically based on predefined rules and schedules. This could be anything from CPU utilization, Disc Queue Length, etc.
 
