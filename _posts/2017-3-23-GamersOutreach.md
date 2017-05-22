@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Volunteer web portal with Gamers Outreach"
+title:  "Children's hospitals, charity, and gaming connect with Azure App Services"
 author: "Dave Voyles"
 author-link: "http://www.twitter.com/DaveVoyles"
 #author-image: "{{ site.baseurl }}/images/authors/photo.jpg"
@@ -8,21 +8,20 @@ date:   2017-04-04
 categories: [Azure App Service]
 color: "blue"
 #image: "{{ site.baseurl }}/images/imagename.png" #should be ~350px tall
-excerpt: With ASP.NET core on Microsoft Azure, we can quickly spin up a website and backend for charity volunteers to create a profile, and the charity to easily
-reach out to volunteers when their assistance is needed."
+excerpt: "Children's hospitals, charity, and gaming connect with Azure App Services"
 language: The language of the article (e.g.: [English])
 verticals: The vertical markets this article has focus on (e.g.: [Other])
 ---
 
 ## Volunteer web portal with Gamers Outreach ##
 
-A team from Microsoft and Gamers Outreach set out to create a web portal to improve how Gamers Outreach connects volunteers to opportunities in specific locations across the US.  
+A team from Microsoft and Gamers Outreach set out to create a web interface to improve how Gamers Outreach connects volunteers to opportunities in children's hospitals throughout the US.  
 
-This engagement showed how easy it was to deliver an ASP.NET core solution and host it as an Azure App Service. This included:
+This engagement illustrated how easy it was to deliver an ASP.NET core solution and host it as an Azure App Service. This included:
 
 - Volunteer portal to build their profile including interests, time availability and skills.
 - Staff portal to: 
-	- Input location and track carts.
+	- Input location and track carts (portable displays with gaming devices).
 	- Locate and connect with volunteers that are close to opportunities in select cities.
 	- Use the number of volunteers in an area to decide on new locations.
 
@@ -71,6 +70,8 @@ when a Kart arrived, Gamers Outreach staff would have to sift through all of the
 
 The project goal was to replace the static Google Form with an easy to extend web application that would not only collect the volunteer information, but also manage and visualize the data in order to improve Gamers Outreach staff processes.
 
+Furthermore, Gamers Outreach is largely organized by volunteer services, so technical projects may change hands often. With that in mind, they needed a solution that could allow developers from anywhere in the world to quickly make changes to the web app, immediately scale the application to meet demand, and of course back have rednundacy in case the code every got wiped when changings hands. 
+
 ## Solution, steps, and delivery ##
 The team used the existing form as the basis for the volunteer information. This new way of managing profiles allows the volunteer to update their contact information or change their availability once their information was stored. 
 
@@ -95,6 +96,34 @@ The team created the solution with ASP.NET MVC and DocumentDB to create a small 
 
 The website will be maintained by volunteer staff for Gamers Outreach so we automated as much of the build and deploy processas possible to minimize the steps required to update site content. 
 
+
+*Redundancy* 
+
+One benefit of App Services is the ability to backup not only the website's codebase, but also that of the databases the code relies on. The Back up and Restore feature in Azure App Service lets you easily create app backups manually or on a schedule. You can restore the app to a snapshot of a previous state by overwriting the existing app or restoring to another app. In total, we are backing up:
+
+- App configuration
+- File content
+- Database connected to your app
+
+[The documentation on the App Services website](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-backup) illustrates how to do this as well.
+
+
+*Scaling*
+
+To ensure a consistent experience regardless of the time of day or how many users are entering their info into our volunteer database, we needed to take advante of App Service scaling. When it comes to scaling, there are two workflows for scaling, scale up and scale out. Becuase the Gamers Outreach website is not running and computationally intensive applications, there wasn't a need to scale up, but as traffic increases on the site, especially when the volume of volunteers grows, the need to scale out will soon come into play. 
+
+Scaling out increases the number of Virtual Machine (VM) instances that run the Gamers Outreach app. You can scale out to as many as 20 instances, depending on your pricing tier. App Service Environments in Premium tier will further increase your scale-out count to 50 instances, which is more than would be need3ed here. Morevoer, we've enabled autoscaling, which is to scale instance count automatically based on predefined rules and schedules. This could be anything from CPU utilization, Disc Queue Length, etc.
+
+We are scaling through the Azure portal, but you can also use the [REST API](https://msdn.microsoft.com/library/azure/dn931953.aspx) or [.NET SDK](https://www.nuget.org/packages/Microsoft.Azure.Insights/) to adjust scale manually or automatically.
+
+
+*Continuous Deployment*
+
+ App Service has built-in integration with a number of services, including BitBucket, GitHub, and Visual Studio Team Services (VSTS), which enables a continuous deployment workflow where Azure pulls in the most recent updates from your project published to one of these services. Continuous deployment is a great option for projects where multiple and frequent contributions are being integrated, and considering this project will continue to be worked on by numerous volunteers overtime, it made for a perfect use case. 
+
+ For Gamers Outreach, all of their code will be stored on GitHub, and any changes to the master branch of their repository will instantly be visible on the production website. Alternatively, the team could also create a staging branch, which allows for updates to be tested out before they go live. When they are satisfied with their work, they can set up [staging environments](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-staged-publishing), which allows for swapping between the two branches on the fly. 
+
+
 ## Conclusion ##
 
 **Measurable impact/benefits**
@@ -103,7 +132,7 @@ With this ASP.NET solution, volunteers can quickly build a profile to detail the
 
 >"This will be incredibly helpful for us, especially when it comes time to scaling. We've been overwhelmed with having to manage this all by hand from an excel spreadsheet, so this will save us a huge amount of time."
 
-The site is set up with continuous deployment, so when volunteer developers make changes, these can be easily deployed to the production website.
+The site is set up with continuous deployment, so when volunteer developers make changes, these can be easily deployed to the production website. Moreover, with scaling configured, the application can build out as more volunteers and staff continue to enter and access the volunteer portal 
 
 **Going Forward**
 
@@ -125,3 +154,7 @@ Zack is already thinking of ways this new website can be used to add gamificatio
 - [Gamers Outreach Code](http://github.com/...)
 - [Azure App Service Docs](https://docs.microsoft.com/en-us/azure/app-service/)
 - [Intro to ASP.NET Core Docs](https://docs.microsoft.com/en-us/aspnet/core/)
+- [App Services Backup Docs](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-backup)
+- [Scaling in Azure Docs](https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/insights-how-to-scale)
+- [Continuous deployment App Service Docs](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-continuous-deployment)
+- [Staging Environemnt App Service Docs](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-staged-publishing)
